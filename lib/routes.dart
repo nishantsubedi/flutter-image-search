@@ -4,5 +4,5 @@ import 'package:flutter/material.dart';
 
 final routes = {
   '/':(BuildContext context) => HomePage(),
-  '/search/all':(BuildContext context) => Search(),
+  '/search':(BuildContext context) => Search(),
 };

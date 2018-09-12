@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget{
       return new MaterialApp(
         title: 'ImageSearch',
         theme: new ThemeData(
-          primarySwatch: Colors.amber,
+          primarySwatch: Colors.deepOrange,
         ),
         initialRoute: '/',
         routes: routes,
