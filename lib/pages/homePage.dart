@@ -2,35 +2,45 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 
-class HomePage extends StatelessWidget {
-  TextEditingController _searchTextController = new TextEditingController();  
+class HomePage extends StatefulWidget{
+  @override
+    State<StatefulWidget> createState() {
+      // TODO: implement createState
+      return HomePageState();
+    }
+}
+
+class HomePageState extends State<HomePage> {
+  TextEditingController _searchTextController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
-          appBar: AppBar(
-            title: TextField(
-              controller: _searchTextController,
-              style: TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  hintText: 'Search Images',
-                  hintStyle: TextStyle(color: Colors.white),),
-                  cursorColor: Colors.purple,
-              keyboardType: TextInputType.text,
+        appBar: AppBar(
+          title: TextField(
+            controller: _searchTextController,
+            style: TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              hintText: 'Search Images',
+              hintStyle: TextStyle(color: Colors.white),
             ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.search,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  print(_searchTextController.text);
-                },
-              )
-            ],
+            cursorColor: Colors.purple,
+            keyboardType: TextInputType.text,
           ),
-          body: Text('Results')),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                print(_searchTextController.text);
+              },
+            )
+          ],
+        ),
+        body: _displayResults(),
+      ),
       onWillPop: () {
         _neverSatisfied(context);
       },
@@ -67,5 +77,9 @@ class HomePage extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _displayResults() {
+    return Text('Result');
   }
 }
