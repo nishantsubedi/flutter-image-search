@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
+import 'package:image_search/services/searchService.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
-class HomePage extends StatefulWidget{
+class HomePage extends StatefulWidget {
   @override
-    State<StatefulWidget> createState() {
-      // TODO: implement createState
-      return HomePageState();
-    }
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return HomePageState();
+  }
 }
 
 class HomePageState extends State<HomePage> {
   TextEditingController _searchTextController = new TextEditingController();
+  bool _initiaLandingPage = true;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -34,7 +38,9 @@ class HomePageState extends State<HomePage> {
                 color: Colors.white,
               ),
               onPressed: () {
-                print(_searchTextController.text);
+                setState(() {
+                  _initiaLandingPage = false;
+                });
               },
             )
           ],
@@ -80,6 +86,45 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget _displayResults() {
-    return Text('Result');
+    if (_initiaLandingPage) {
+      return Text('Home');
+    } else {
+      print('here');
+
+      return FutureBuilder(
+        future: SearchService.get().searchImage(_searchTextController.text),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Swiper(
+              itemCount: 15,
+              scrollDirection: Axis.horizontal,
+
+              itemBuilder: (BuildContext context, int index) {
+                return CachedNetworkImage(
+                    imageUrl: snapshot.data[index].url,
+                    width: MediaQuery.of(context).size.width,
+                    height: 70.0,
+                    placeholder: Image.asset(
+                      "images/images.png",
+                      width: MediaQuery.of(context).size.width,
+                      height: 70.0,
+                    ));
+                // return new Image.network(
+                //   snapshot.data[index].url,
+                //   // "http://via.placeholder.com/350x150",
+                //   // fit: BoxFit.fill,
+                //   width:100.0,
+                //   height: 70.0,
+                // );
+              },
+              // itemCount: snapshot.data.,
+              pagination: new SwiperPagination(),
+              control: new SwiperControl(),
+            );
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      );
+    }
   }
 }

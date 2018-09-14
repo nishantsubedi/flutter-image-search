@@ -18,14 +18,14 @@ class SearchService {
 
   SearchService._internal();
 
-  Future searchImage(String query) async {
-    String url = this.baseUrl + "search/{$query}";
+  Future<List<Image>> searchImage(String query) async {
+    String url = this.baseUrl + "search/$query";
     var response = await dio.get(url);
 
     if (response.statusCode == 200) {
-      Map theMap = json.decode(response.data.toString());
+      // Map theMap = json.decode(response.data.toString());
 
-      ApiResponse apiResponse = ApiResponse.fromJson(theMap);
+      ApiResponse apiResponse = ApiResponse.fromJson(response.data);
       List<Image> imageList = createImageList(apiResponse);
       return imageList;
     } else {
@@ -35,8 +35,8 @@ class SearchService {
 
   List<Image> createImageList(ApiResponse data) {
     List<Image> images = new List();
-    for (int i = 0; i < data.images.length; i++) {
-      var temp = Image.fromJson((data.images[i]));
+    for (int i = 0; i < data.results.length; i++) {
+      var temp = Image.fromJson((data.results[i]));
       images.add(temp);
     }
     return images;

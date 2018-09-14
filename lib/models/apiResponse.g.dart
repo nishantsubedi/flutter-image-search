@@ -7,8 +7,8 @@ part of 'apiResponse.dart';
 // **************************************************************************
 
 ApiResponse _$ApiResponseFromJson(Map<String, dynamic> json) {
-  return ApiResponse(images: json['images'] as List);
+  return ApiResponse(results: json['results'] as List);
 }
 
 Map<String, dynamic> _$ApiResponseToJson(ApiResponse instance) =>
-    <String, dynamic>{'images': instance.images};
+    <String, dynamic>{'results': instance.results};

@@ -4,10 +4,10 @@ part 'apiResponse.g.dart';
 
 @JsonSerializable()
 class ApiResponse {
-  final List<dynamic> images;
+  final List<dynamic> results;
 
   ApiResponse({
-      this.images, 
+      this.results, 
   });
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) => _$ApiResponseFromJson(json);
