@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   TextEditingController _searchTextController = new TextEditingController();
   bool _initiaLandingPage = true;
+  String _query = 'moon';
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -40,6 +41,7 @@ class HomePageState extends State<HomePage> {
               onPressed: () {
                 setState(() {
                   _initiaLandingPage = false;
+                  _query = _searchTextController.text;
                 });
               },
             )
@@ -92,7 +94,7 @@ class HomePageState extends State<HomePage> {
       print('here');
 
       return FutureBuilder(
-        future: SearchService.get().searchImage(_searchTextController.text),
+        future: SearchService.get().searchImage(_query),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Swiper(
@@ -103,11 +105,11 @@ class HomePageState extends State<HomePage> {
                 return CachedNetworkImage(
                     imageUrl: snapshot.data[index].url,
                     width: MediaQuery.of(context).size.width,
-                    height: 70.0,
+                    // height: 70.0,
                     placeholder: Image.asset(
                       "images/images.png",
                       width: MediaQuery.of(context).size.width,
-                      height: 70.0,
+                      // height: 70.0,
                     ));
                 // return new Image.network(
                 //   snapshot.data[index].url,
